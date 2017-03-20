@@ -34,6 +34,6 @@ There are two functions the user needs concern themselves with.  `insert_message
   ad_lsb.insert_message('A quick brown fox jumps over the lazy dog.',
                                   'lazydog.png',
                                    end_string = 'bS&L/TaYq*YD3m`k')
-  retr_string = retrieve_message('lazydog_encoded.png', end_string = 'bS&L/TaYq*YD3m`k')
+  retr_string = ad_lsb.retrieve_message('lazydog_encoded.png', end_string = 'bS&L/TaYq*YD3m`k')
   print('Retrieved message: ', retr_string)
 ```
