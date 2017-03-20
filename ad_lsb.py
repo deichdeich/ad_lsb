@@ -29,8 +29,8 @@ def get_binary_pixel_vals(img_path):
                 image_array[i,j,k] = bin(pix[i,j][k])[2:]
     return(image_array, x, y)
 
-def insert_message(message, img_path, fname = ""):
-    message += '999'
+def insert_message(message, img_path, fname = "", end_string = '999'):
+    message += end_string
     bin_image, x, y = get_binary_pixel_vals(img_path)
     bin_message = str_to_bin(message)
     new_image = Image.new('RGB', (x,y), 'black')
@@ -56,29 +56,33 @@ def insert_message(message, img_path, fname = ""):
     print("Message encoded in image titled {}".format(fname))
     return()
 
-def retrieve_message(img_path):
+def retrieve_message(img_path, end_string = '999'):
     bin_image, x, y = get_binary_pixel_vals(img_path)
     out_bin = ''
+    end_length = len(end_string)
+    bin_end_string = str_to_bin(end_string)
+    bin_end_length = len(bin_end_string)
     for i in xrange(x):
-        if len(out_bin) >= 22 and out_bin[-22:] == '1110010011100100111001':
+        if len(out_bin) >= bin_end_length and out_bin[-bin_end_length:] == bin_end_string:
             break
         for j in xrange(y):
-            if len(out_bin) >= 22 and out_bin[-22:] == '1110010011100100111001':
+            if len(out_bin) >= bin_end_length and out_bin[-bin_end_length:] == bin_end_string:
                 break
             for k in xrange(3):
-                if len(out_bin) >= 22 and out_bin[-22:] == '1110010011100100111001':
+                if len(out_bin) >= bin_end_length and out_bin[-bin_end_length:] == bin_end_string:
                     break
                 out_bin += str(int(bin_image[i,j,k]))[-1]
-    out_str = bin_to_str(str(out_bin))[:-3]
+    out_str = bin_to_str(str(out_bin))[:-end_length]
     if len(out_str) > 1000:
         with open("{}_decoded.txt".format(img_path), "w") as text_file:
             text_file.write(out_str)
-        print('Output string longer than 1000 characters.  Automatically written to file at {}_decoded.txt'.format(img_path))
+        print('Output string longer than 1000 characters.  Automatically written to file at {}_decoded.txt'.format(img_path[:-4]))
     return(out_str)
 
 
 if __name__ == "__main__":
-    new_pic = insert_message('A quick brown fox jumps over the lazy dog.', 'lion.png')
-    print('Retrieved message: ', retrieve_message('lion_encoded.png'))
+    new_pic = insert_message('A quick brown fox jumps over the lazy dog.', 'lion.png', end_string = 'bS&L/TaYq*YD3m`k')
+    #retrieve_message('lion_encoded.png', end_string = 'bS&L/TaYq*YD3m`k')
+    print('Retrieved message: ', retrieve_message('lion_encoded.png', end_string = 'bS&L/TaYq*YD3m`k'))
     
 
