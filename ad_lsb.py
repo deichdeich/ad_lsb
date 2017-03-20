@@ -81,8 +81,7 @@ def retrieve_message(img_path, end_string = '999'):
 
 
 if __name__ == "__main__":
-    new_pic = insert_message('A quick brown fox jumps over the lazy dog.', 'lion.png', end_string = 'bS&L/TaYq*YD3m`k')
-    #retrieve_message('lion_encoded.png', end_string = 'bS&L/TaYq*YD3m`k')
+    insert_message('A quick brown fox jumps over the lazy dog.', 'lion.png', end_string = 'bS&L/TaYq*YD3m`k')
     print('Retrieved message: ', retrieve_message('lion_encoded.png', end_string = 'bS&L/TaYq*YD3m`k'))
     
 
